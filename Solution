@@ -1,0 +1,38 @@
+#include <vector>
+#include <unordered_map>
+
+class Solution {
+public:
+    // This function finds two indices in the nums vector such that their corresponding values add up to the target.
+    // If found, it returns the indices of these two numbers as a vector of size 2.
+    std::vector<int> twoSum(std::vector<int>& nums, int target) 
+{
+        // Create an unordered_map to store the number and its index.
+        // The key is the number, and the value is the index of that number in the nums array.
+        std::unordered_map<int, int> num_map {}; // num_map[number] = index
+
+        // Iterate over the nums array to find the two numbers that sum up to the target.
+        for (int i = 0; i < static_cast<int>(nums.size()); ++i)
+        {
+            // Calculate the complement of the current element.
+            // The complement is the number that needs to be added to nums[i] to get the target.
+            int complement = target - nums[i];
+
+            // Check if the complement is already in the map.
+            // If it is, that means we've found the two numbers whose sum equals the target.
+            if (num_map.find(complement) != num_map.end())
+            {
+                // If the complement is found, return the indices of the complement and the current number.
+                // num_map[complement] gives the index of the complement, and 'i' is the index of the current number.
+                return {num_map[complement], i};
+            }
+
+            // If the complement is not found, store the current number with its index in the map.
+            // This way, we can check for this number as a complement in future iterations.
+            num_map[nums[i]] = i;
+        }
+
+        // Return an empty vector if no solution is found (though this case should not occur per problem constraints).
+        return {};
+    }
+};
